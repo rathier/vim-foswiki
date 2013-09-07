@@ -37,18 +37,7 @@ if !exists("main_syntax")
   let main_syntax = 'twiki'
 endif
 
-if exists("g:Twiki_SourceHTMLSyntax") && g:Twiki_SourceHTMLSyntax != 0
-  source $VIMRUNTIME/syntax/html.vim 
-endif
-
-" Don't use standard HiLink, it will not work with included syntax files
-if version < 508
-  command! -nargs=+ TwikiHiLink   highlight link <args>
-  command! -nargs=+ TwikiSynColor highlight <args>
-else
-  command! -nargs=+ TwikiHiLink   highlight default link <args>
-  command! -nargs=+ TwikiSynColor highlight default <args>
-endif
+runtime! syntax/html.vim
 
 "============================================================================
 " Group Definitions:    {{{1
@@ -61,8 +50,7 @@ syntax match twikiOrderedList  "^\(   \)\+1\ze "
 syntax match twikiSimpleVariable "\([^!]\|^\)\zs%\w\+%"
 syntax match twikiVariableParam contained "[a-z0-9]*="
 syntax region twikiVariableValue start="\"" skip="\\\"" end="\"" contains=twikiSimpleVariable,twikiVariable
-syntax region twikiVariable start="\([^!]\|^\)\zs%\w\+{" end="}%"
-    \ contains=twikiVariableParam,twikiVariableValue,TwikiHiLink,twikiSimpleVariable,twikiVariable
+syntax region twikiVariable start="\([^!]\|^\)%\w\+{" end="}%" contains=twikiVariableParam,twikiVariableValue,twikiSimpleVariable,twikiVariable
 syntax match twikiTag      "<\w\+>"
 
 syntax match twikiDelimiter "|"
@@ -112,41 +100,38 @@ call s:TwikiCreateEmphasis('__', 'BoldItalic')
 " Group Linking:    {{{1
 "============================================================================
 
-TwikiHiLink twikiHeading       String
-TwikiHiLink twikiHeadingMarker Operator
-TwikiHiLink twikiVariable      PreProc
-TwikiHiLink twikiVariableParam Type
-TwikiHiLink twikiVariableValue String
-TwikiHiLink twikiTag           PreProc
-TwikiHiLink twikiComment       Comment
-TwikiHiLink twikiWord          Tag
-TwikiHiLink twikiAnchor        PreProc
-TwikiHiLink twikiVerbatim      Constant
-TwikiHiLink twikiPre           Constant
-TwikiHiLink twikiBulletedList  Operator
-TwikiHiLink twikiOrderedList   Operator
+hi link twikiHeading       Title
+hi link twikiHeadingMarker Operator
+hi link twikiVariable      PreProc
+hi link twikiVariableParam Type
+hi link twikiVariableValue String
+hi link twikiTag           PreProc
+hi link twikiComment       Comment
+hi link twikiWord          Tag
+hi link twikiAnchor        PreProc
+hi link twikiVerbatim      Constant
+hi link twikiPre           Constant
+hi link twikiBulletedList  Operator
+hi link twikiOrderedList   Operator
 
-TwikiHiLink twikiDelimiter     Operator
+hi link twikiDelimiter     Operator
 
 " Links
-TwikiSynColor twikiLinkMarker term=bold cterm=bold gui=bold
-TwikiHiLink   twikiForcedLink Tag
-TwikiHiLink   twikiLinkRef    Tag
-TwikiHiLink   twikiLinkLabel  Identifier
+hi twikiLinkMarker term=bold cterm=bold gui=bold
+hi link   twikiForcedLink Tag
+hi link   twikiLinkRef    Tag
+hi link   twikiLinkLabel  Identifier
 
 " Emphasis
-TwikiSynColor twikiFixed      term=underline cterm=underline gui=underline
-TwikiSynColor twikiBoldFixed  term=bold,underline cterm=bold,underline gui=bold,underline
-TwikiSynColor twikiItalic     term=italic cterm=italic gui=italic
-TwikiSynColor twikiBoldItalic term=bold,italic cterm=bold,italic gui=bold,italic
-TwikiSynColor twikiBold       term=bold cterm=bold gui=bold
+hi twikiFixed      term=underline cterm=underline gui=underline
+hi twikiBoldFixed  term=bold,underline cterm=bold,underline gui=bold,underline
+hi twikiItalic     term=italic cterm=italic gui=italic
+hi twikiBoldItalic term=bold,italic cterm=bold,italic gui=bold,italic
+hi twikiBold       term=bold cterm=bold gui=bold
 
 "============================================================================
 " Clean Up:    {{{1
 "============================================================================
-
-delcommand TwikiHiLink
-delcommand TwikiSynColor
 
 if main_syntax == 'twiki'
   unlet main_syntax
