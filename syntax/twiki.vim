@@ -51,6 +51,7 @@ syntax match twikiSimpleVariable "\([^!]\|^\)\zs%\w\+%"
 syntax match twikiVariableParam contained "[a-z0-9]*="
 syntax region twikiVariableValue start="\"" skip="\\\"" end="\"" contains=twikiSimpleVariable,twikiVariable
 syntax region twikiVariable start="\([^!]\|^\)%\w\+{" end="}%" contains=twikiVariableParam,twikiVariableValue,twikiSimpleVariable,twikiVariable
+syntax match twikiVariableNoPar "\([^!]\|^\)%\w\+%"
 syntax match twikiTag      "<\w\+>"
 
 syntax match twikiDelimiter "|"
@@ -103,6 +104,7 @@ call s:TwikiCreateEmphasis('__', 'BoldItalic')
 hi link twikiHeading       Title
 hi link twikiHeadingMarker Operator
 hi link twikiVariable      PreProc
+hi link twikiVariableNoPar PreProc
 hi link twikiVariableParam Type
 hi link twikiVariableValue String
 hi link twikiTag           PreProc
