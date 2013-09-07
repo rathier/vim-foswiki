@@ -62,7 +62,7 @@ syntax region twikiVerbatim matchgroup=twikiTag
 syntax region twikiPre matchgroup=twikiTag contains=twikiVariable,twikiSimpleVariable
     \ start="<pre>" end="</pre>"
 
-syntax region twikiHeading matchgroup=twikiHeadingMarker oneline
+syntax region twikiHeading matchgroup=twikiHeadingMarker contains=twikiVariable,twikiVariableNoPar oneline
     \ start="^---+\+" end="$"
 
 "let s:wikiWord = '\(\w\+\.\)\?\u[a-z0-9]\+\(\u[a-z0-9]\+\)\+'
